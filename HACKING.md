@@ -4,16 +4,30 @@ This `HACKINGS.md` document describes how to deal with **error handling** in the
 
 -----
 
-## Do Not
+## Do Nots
+
+* Do _not_ use `panic()` for recoverable errors.
+* Do _not_ ignore errors.
+* Do not use `_` (underscore) to discard an error unless you are certain it's not relevant.
+
+## Dos
+
+* Do log errors.
+* Do propagate to the calling function.
+* Do handle all error appropriately.
+
+-----
+
+## Packages
 
 In general, do _not_ use the Go built-in packages for **error handling**.
 I.e., in general, do not use the Go built-in [`"errors"`](https://pkg.go.dev/errors) package, and the [`fmt.Errorf()`](https://pkg.go.dev/fmt#Errorf) function from the Go built-in [`"fmt"`](https://pkg.go.dev/fmt) package.
 
-## Do
-
 Instead use the following package for **error handling**:
 
 * https://codeberg.org/reiver/go-erorr
+
+-----
 
 ## Pre-Defined Errors
 
