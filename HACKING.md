@@ -19,7 +19,7 @@ Instead use the following package for **error handling**:
 
 * Instead of using the [`errors.New()`](https://pkg.go.dev/errors#New) function in the Go built-in [`"errors"`](https://pkg.go.dev/errors) package, use the `erorr.Error` type.
   * Pre-Defined errors created using the the `erorr.Error` type **MUST** be created using a `const` (rather than a `var`).
-* Instead of using the [`fmt.Errorf()`](https://pkg.go.dev/fmt#Errorf) function from the Go built-in [`"fmt"`](https://pkg.go.dev/fmt) package, use the `erorr.Errorf()` or `erorr.Wrap()` functions.
+* Instead of using the [`fmt.Errorf()`](https://pkg.go.dev/fmt#Errorf) function from the Go built-in [`"fmt"`](https://pkg.go.dev/fmt) package, use the `erorr.Errorf()` or `erorr.Wrap()` functions. (With `erorr.Wrap()` usually being preferred over `erorr.Errorf()`.)
 
 ## Pre-Defined Errors
 
@@ -39,5 +39,23 @@ const (
 
 ```
 
-Notice that a `const` was used (rather than a `var`).
+* Notice that a `const` was used (rather than a `var`).
+* Notice that all _exported_ pre-defined errors started with the prefix `"Err"`.
+* Notice that all _un-exported_ pre-defined errors started with the prefix "err". 
 
+## Contextual Errors
+
+Create a contextual error with source-code similar to the following:
+
+```golang
+if nil != err {
+	return erorr.Wrap(err, "API request failed.",
+		field.String("request-uri", requestURI),
+		field.String("service", "monitor"),
+	)
+}
+```
+
+* Notice that the original error was passed as the first parameter to `erorr.Wrap()`.
+* Notice that a human-legible message was passed at the second parameter to `erorr.Wrap()`.
+* Notice that further context about the error was added as key-value pairs with the rest of the parameters passed to `erorr.Wrap()`.
