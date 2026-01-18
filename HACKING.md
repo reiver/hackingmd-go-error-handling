@@ -17,9 +17,71 @@ Instead use the following package for **error handling**:
 
 ## Alternatives
 
-* Instead of using the [`errors.New()`](https://pkg.go.dev/errors#New) function in the Go built-in [`"errors"`](https://pkg.go.dev/errors) package, use the `erorr.Error` type.
-  * Pre-Defined errors created using the the `erorr.Error` type **MUST** be created using a `const` (rather than a `var`).
-* Instead of using the [`fmt.Errorf()`](https://pkg.go.dev/fmt#Errorf) function from the Go built-in [`"fmt"`](https://pkg.go.dev/fmt) package, use the `erorr.Errorf()` or `erorr.Wrap()` functions. (With `erorr.Wrap()` usually being preferred over `erorr.Errorf()`.)
+Here are some alternatives for using the `erorr` package rather than using the Go built-in [`"errors"`](https://pkg.go.dev/errors) package, and the [`fmt.Errorf()`](https://pkg.go.dev/fmt#Errorf) function from the Go built-in [`"fmt"`](https://pkg.go.dev/fmt) package:....
+
+### Alternative for Pre-Defined Errors
+
+Rather than doing something similar to:
+
+```golang
+var (
+	ErrNilReceiver = errors.New("nil receiver")	
+)
+```
+
+Instead use the `erorr.Error` type similar to the following:
+
+```golang
+const (
+	ErrNilReceiver = erorr.Error("nil receiver")	
+)
+```
+
+* Notice that `const` (rather than a `var`) was used with `erorr.Error`.
+
+### Alteratives for Returning With Fixed Error Message
+
+Rather than doing something similar to:
+
+```golang
+	return errors.New("proxy error")
+```
+
+Instead use the `erorr.Stamp()` functio similar to the following:
+
+```golang
+	return erorr.Stamp("proxy error")
+```
+
+Or, better yet:
+
+```golang
+	return erorr.Stamp("proxy error"
+		field.String("proxy-uri", proxyURL),
+	)
+```
+
+### Alteratives for Returning With Dynamic Error Message
+
+Rather than doing something similar to:
+
+```golang
+	return fmt.Errorf("proxy error: %w", err)
+```
+
+Instead use the `erorr.Errorf()` functio similar to the following:
+
+```golang
+	return erorr.Errorf("proxy error: %w", err)
+```
+
+Or, better yet:
+
+```golang
+	return erorr.Wrap(err, "proxy error"
+		field.String("proxy-uri", proxyURL),
+	)
+```
 
 ## Pre-Defined Errors
 
