@@ -8,6 +8,20 @@ This `HACKING.md` file can be imported into an `AGENTS.md` and `SKILLS.md` file.
 
 -----
 
+## Installation
+
+This can be _installed_ into a `git` repo by adding it as a _git submodule_:
+
+```bash
+mkdir hacking
+
+cd hacking
+
+git submodule add https://github.com/reiver/hackingmd-go-error-handling
+```
+
+-----
+
 ## Author
 
 This was written by [Charles Iliya Krempeaux](http://reiver.link)
